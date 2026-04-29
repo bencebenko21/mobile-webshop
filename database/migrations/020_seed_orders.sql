@@ -1,0 +1,1 @@
+INSERT INTO orders (order_number, user_id, current_status, delivery_zip_code, delivery_city, delivery_street_name, delivery_floor_flat, order_date) VALUES (001, 1, 'pending', 3000,'Szeged','Main Street', '2/A', '2026-04-12 10:00:00');

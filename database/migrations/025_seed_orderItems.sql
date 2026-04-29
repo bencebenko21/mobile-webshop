@@ -1,0 +1,1 @@
+INSERT INTO order_items (order_id, product_variant_id, quantity, price_at_purchase) VALUES (001, 1, 1, 899);
