@@ -1,4 +1,5 @@
 const express = require('express');
+const { authenticateToken } = require('../middlewares/authMiddleware');
 const router = express.Router();
 const userService = require('../services/userService');
 
@@ -16,12 +17,16 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await userService.loginUser(email, password);
-        res.status(200).json({ message: 'Login successful', user });
+        const { user, token } = await userService.loginUser(email, password);
+        res.status(200).json({ message: 'Login successful', user, token });
     } catch (err) {
         console.error(err);
         res.status(401).json({ error: 'Invalid credentials' });
     }
+});
+
+router.get('/me', authenticateToken, (req, res) => {
+    res.status(200).json({ message: 'Token valid', user: req.user });
 });
 
 module.exports = router;
