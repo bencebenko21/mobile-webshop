@@ -1,12 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userRepository = require('../repositories/userRepository');
+const cartRepository = require('../repositories/cartRepository');
 const saltRounds = 10;
 
 async function registerUser(firstName, lastName, email, password, phoneNumber, zipCode, city, streetName, floorFlat) {
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await userRepository.createUser(firstName, lastName, email, hashedPassword, phoneNumber, zipCode, city, streetName, floorFlat);
+        const newCart = await cartRepository.createCart(newUser.id);
         delete newUser.user_password;
         return newUser;
     } catch (err) {
