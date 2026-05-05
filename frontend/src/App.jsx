@@ -27,6 +27,7 @@ function AdminRoute({ children }) {
 export default function App() {
     return (
         <BrowserRouter>
+        <div style={{ minHeight: '100vh', backgroundColor: '#1a1a2e' }}>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -49,6 +50,7 @@ export default function App() {
                     <AdminRoute><AdminPanel /></AdminRoute>
                 } />
             </Routes>
+        </div>
         </BrowserRouter>
     )
 }

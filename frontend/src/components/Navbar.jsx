@@ -13,7 +13,7 @@ export default function Navbar() {
     return (
         <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#1a1a2e', color: 'white' }}>
             <Link to="/" style={{ color: 'white', textDecoration: 'none', fontSize: '1.5rem', fontWeight: 'bold' }}>
-                📱 MobileShop
+                MobileShop
             </Link>
             <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                 <Link to="/products" style={{ color: 'white', textDecoration: 'none' }}>Products</Link>
