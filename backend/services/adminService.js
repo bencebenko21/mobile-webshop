@@ -79,4 +79,18 @@ async function updateStock(variantId, stock) {
     }
 }
 
-module.exports = { getAllOrders, updateOrderStatus, createProduct, updateProduct, deleteProduct, updateStock };
+async function updateVariantPrice(variantId, price) {
+    if (price < 0) {
+        throw new Error('Price cannot be negative');
+    }
+    try {
+        const result = await adminRepository.updateVariantPrice(variantId, price);
+        if (!result) throw new Error('Variant not found');
+        return result;
+    } catch(err) {
+        console.error('Error in admin service - updateVariantPrice:', err);
+        throw err;
+    }
+}
+
+module.exports = { getAllOrders, updateOrderStatus, createProduct, updateProduct, deleteProduct, updateStock, updateVariantPrice };

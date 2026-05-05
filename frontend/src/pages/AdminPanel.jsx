@@ -9,6 +9,7 @@ export default function AdminPanel() {
     const [message, setMessage] = useState(null)
     const [stockInputs, setStockInputs] = useState({})
     const [statusInputs, setStatusInputs] = useState({})
+    const [priceInputs, setPriceInputs] = useState({})
 
     useEffect(() => {
         async function fetchData() {
@@ -66,6 +67,19 @@ export default function AdminPanel() {
         } catch(err) {
             showMessage(err.message)
         }
+    }
+
+    async function handlePriceUpdate(variantId) {
+    const price = Number(priceInputs[variantId])
+    if (isNaN(price) || price < 0) return
+    try {
+        await api.put(`/admin/variants/${variantId}`, { price })
+        const updatedProducts = await api.get('/products')
+        setProducts(updatedProducts)
+        showMessage('Price updated')
+    } catch(err) {
+        showMessage(err.message)
+    }
     }
 
     if (loading) return <p style={{ color: 'white', textAlign: 'center', marginTop: '2rem' }}>Loading...</p>
@@ -160,6 +174,14 @@ export default function AdminPanel() {
                                             <button onClick={() => handleStockUpdate(variant.variant_id)}
                                                 style={{ padding: '0.25rem 0.75rem', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
                                                 Update
+                                            </button>
+                                            <input type="number" min="0" placeholder="New price"
+                                                value={priceInputs[variant.variant_id] || ''}
+                                                onChange={e => setPriceInputs({ ...priceInputs, [variant.variant_id]: e.target.value })}
+                                                style={{ width: '80px', padding: '0.25rem', borderRadius: '4px', border: 'none', textAlign: 'center' }} />
+                                            <button onClick={() => handlePriceUpdate(variant.variant_id)}
+                                                style={{ padding: '0.25rem 0.75rem', backgroundColor: '#ff9800', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                                                Price
                                             </button>
                                         </div>
                                     </div>

@@ -85,4 +85,21 @@ router.put('/stock/:variantId', authenticateToken, requireAdmin, async (req, res
     }
 });
 
+router.put('/variants/:variantId', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { price } = req.body;
+        const result = await adminService.updateVariantPrice(req.params.variantId, price);
+        res.status(200).json(result);
+    } catch(err) {
+        console.error(err);
+        if (err.message === 'Price cannot be negative') {
+            return res.status(400).json({ error: err.message });
+        }
+        if (err.message === 'Variant not found') {
+            return res.status(404).json({ error: 'Variant not found' });
+        }
+        res.status(500).json({ error: 'Failed to update price' });
+    }
+});
+
 module.exports = router;

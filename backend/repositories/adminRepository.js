@@ -109,4 +109,19 @@ async function updateStock(variantId, stock) {
     }
 }
 
-module.exports = { getAllOrders, updateOrderStatus, createProduct, updateProduct, deleteProduct, updateStock };
+async function updateVariantPrice(variantId, price) {
+    const query = `
+        UPDATE product_variants SET price = $1
+        WHERE id = $2
+        RETURNING *
+    `;
+    try {
+        const result = await pool.query(query, [price, variantId]);
+        return result.rows[0];
+    } catch(err) {
+        console.error('Error updating variant price:', err.stack);
+        throw err;
+    }
+}
+
+module.exports = { getAllOrders, updateOrderStatus, createProduct, updateProduct, deleteProduct, updateStock, updateVariantPrice };
