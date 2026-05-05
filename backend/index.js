@@ -6,8 +6,10 @@ const productRoutes = require('./routes/productRoutes')
 const cartRoutes = require('./routes/cartRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const cors = require('cors')
 const port = process.env.PORT
 
+app.use(cors({ origin: 'http://localhost' }))
 app.use(express.json())
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
