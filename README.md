@@ -74,4 +74,4 @@ Open **http://localhost** in your browser.
  
 > Full documentation in [`/docs`](./docs) — API reference, architecture, and design decisions.
  
-**Bence** — MSc Programtervező informatikus, 2026
+**Bence Benkő** - 2026
